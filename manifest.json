@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Page AI Analyzer",
+  "version": "0.1.0",
+  "description": "Analyze the current webpage with AI.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Analyze this page",
+    "default_popup": "popup.html"
+  }
+}
