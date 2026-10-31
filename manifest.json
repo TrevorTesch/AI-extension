@@ -1,19 +1,23 @@
 {
   "manifest_version": 3,
-  "name": "Page AI Analyzer",
+  "name": "AI Extension",
   "version": "0.1.0",
-  "description": "Analyze the current webpage with AI.",
+  "description": "Start a fresh AI chat and analyze the webpage you're viewing.",
   "permissions": [
     "activeTab",
     "scripting",
     "storage"
   ],
+  "host_permissions": [
+    "https://api.openai.com/*",
+    "https://generativelanguage.googleapis.com/*",
+    "https://api.anthropic.com/*"
+  ],
   "background": {
-    "service_worker": "background.js",
-    "type": "module"
+    "service_worker": "background.js"
   },
   "action": {
-    "default_title": "Analyze this page",
+    "default_title": "Open AI Extension",
     "default_popup": "popup.html"
   }
 }
