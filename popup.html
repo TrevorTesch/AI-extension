@@ -1,51 +1,95 @@
+html
+
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <title>Page AI</title>
-
-    <style>
-      body {
-        width: 380px;
-        padding: 16px;
-        font-family: Arial, sans-serif;
-      }
-
-      button {
-        width: 100%;
-        padding: 10px;
-        margin-top: 8px;
-        cursor: pointer;
-      }
-
-      textarea {
-        width: 100%;
-        height: 70px;
-        margin-top: 12px;
-        resize: vertical;
-      }
-
-      #answer {
-        margin-top: 14px;
-        white-space: pre-wrap;
-        line-height: 1.4;
-      }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Extension</title>
+    <link rel="stylesheet" href="popup.css">
   </head>
-
   <body>
-    <h2>Page AI</h2>
+    <main>
+      <section id="setupScreen">
+        <header>
+          <p class="eyebrow">AI EXTENSION</p>
+          <h1>Start a fresh chat</h1>
+          <p class="subtext">Choose a provider and model for this session.</p>
+        </header>
 
-    <button id="analyze">Analyze this page</button>
+        <label for="provider">Provider</label>
+        <select id="provider">
+          <option value="openai">OpenAI</option>
+          <option value="gemini">Google Gemini</option>
+          <option value="anthropic">Anthropic Claude</option>
+        </select>
 
-    <textarea
-      id="question"
-      placeholder="Ask a question about this page..."
-    ></textarea>
+        <label for="model">Model</label>
+        <select id="model"></select>
+        <input
+          id="customModel"
+          type="text"
+          placeholder="Enter the provider's model ID"
+          autocomplete="off"
+          hidden
+        >
 
-    <button id="ask">Ask AI</button>
+        <label for="apiKey">Provider API key</label>
+        <input
+          id="apiKey"
+          type="password"
+          placeholder="Paste your own API key"
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <p id="keyStatus" class="status" aria-live="polite"></p>
 
-    <div id="answer">Ready.</div>
+        <div class="button-row">
+          <button id="saveKey" class="secondary" type="button">Save key</button>
+          <button id="forgetKey" class="secondary danger" type="button">Forget key</button>
+        </div>
+
+        <button id="startChat" class="primary" type="button">Start new chat</button>
+
+        <p class="fine-print">
+          Your key is stored in this browser profile. Chat messages are not saved.
+          Provider fees and usage limits may apply.
+        </p>
+      </section>
+
+      <section id="chatScreen" hidden>
+        <header class="chat-header">
+          <div>
+            <p class="eyebrow">NEW SESSION</p>
+            <h1 id="activeModel">Chat</h1>
+          </div>
+          <button id="changeModel" class="secondary small-button" type="button">
+            New chat
+          </button>
+        </header>
+
+        <div id="chatLog" role="log" aria-live="polite" aria-relevant="additions"></div>
+
+        <div class="chat-actions">
+          <button id="analyzePage" class="secondary" type="button">
+            Analyze this page
+          </button>
+        </div>
+
+        <form id="chatForm">
+          <label class="visually-hidden" for="messageInput">Your message</label>
+          <textarea
+            id="messageInput"
+            rows="2"
+            placeholder="Ask something…"
+            required
+          ></textarea>
+          <button id="sendButton" class="primary" type="submit">Send</button>
+        </form>
+
+        <p id="chatStatus" class="status" aria-live="polite"></p>
+      </section>
+    </main>
 
     <script src="popup.js"></script>
   </body>
